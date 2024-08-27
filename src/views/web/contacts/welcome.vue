@@ -2,11 +2,8 @@
 </script>
 
 <template>
-  <div>
-    <RouterView/>
-  </div>
+  <div>欢迎</div>
 </template>
 
 <style scoped>
-
 </style>
