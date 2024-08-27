@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {useStore} from "@/stores";
+import { useStore } from "@/stores";
 const store = useStore()
 store.loadToken()
 </script>
 
 <template>
   <div class="im_body">
-    <RouterView/>
+    <RouterView />
   </div>
 </template>
 

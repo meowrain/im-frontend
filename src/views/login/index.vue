@@ -4,30 +4,29 @@ import {authLoginApi, type authLoginRequest} from "@/api/auth";
 import type {baseResponse} from "@/api";
 import {ElMessage} from "element-plus";
 import {useStore} from "@/stores";
-
+import router from "@/router";
 const store = useStore()
 
 const form = reactive<authLoginRequest>({
   username: "",
   password: "",
 })
-
-
 async function login() {
-  let res: baseResponse<authLoginRequest> = await authLoginApi()
-  if (res.code !== 200) {
+
+  let res = await authLoginApi(form)
+  if (res.code) {
     ElMessage.error(res.msg)
     return
   }
-  console.log("response data:", res.data)
-  //存储token
+  // 拿到的是token，前端要对他进行解码
+  ElMessage.success("登陆成功")
   store.setToken(res.data.token)
-  ElMessage.success(res.msg)
-  //重定向
-  router.push({
+  // 重定向
+  await router.push({
     name: "web",
   })
 }
+
 </script>
 
 <template>
@@ -38,7 +37,7 @@ async function login() {
     <div class="login_form">
       <el-form :model="form">
         <el-form-item>
-          <el-input v-model="form.userName" placeholder="用户名">
+          <el-input v-model="form.username" placeholder="用户名">
             <template #prefix>
               <i class="iconfont icon-yonghuming"></i>
             </template>
