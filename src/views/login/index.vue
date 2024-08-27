@@ -15,10 +15,18 @@ const form = reactive({
   <div class="login_form">
     <el-form :model="form">
         <el-form-item>
-          <el-input v-model="form.username" placeholder="用户名"></el-input>
+          <el-input v-model="form.userName" placeholder="用户名">
+            <template #prefix>
+              <i class="iconfont icon-yonghuming"></i>
+            </template>
+          </el-input>
         </el-form-item>
         <el-form-item class="item_password">
-          <el-input v-model="form.password" placeholder="密码"></el-input>
+          <el-input v-model="form.password" placeholder="密码">
+            <template #prefix>
+              <i class="iconfont icon-mima"></i>
+            </template>
+          </el-input>
         </el-form-item>
       <el-form-item class="item_action">
         <el-checkbox>记住密码</el-checkbox>
