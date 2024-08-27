@@ -6,6 +6,7 @@ import router from './router'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import '@/assets/base.css'
+import "@/assets/iconfont.css"
 const app = createApp(App)
 
 app.use(createPinia())

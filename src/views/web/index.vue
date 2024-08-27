@@ -46,6 +46,8 @@ function checkMenu(menu: string){
 
 <style lang="scss" scoped>
 .im_web {
+  display: flex;
+  flex-direction: row;
   width: 1000px;
   height: 600px;
   background-color: white;
