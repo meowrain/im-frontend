@@ -1,19 +1,30 @@
 <script setup lang="ts">
 
+import {ChatLineRound, Notification, User} from "@element-plus/icons-vue";
 </script>
 
 <template>
 <div class="im_web">
 <div class="im_slide">
   <div class="avatar">
-    <img
-        src="https://meowrain.cn/upload/2024/06/IMG_20240511_124707_183.jpg"
-        alt="">
+    <img src="https://meowrain.cn/upload/2024/06/IMG_20240511_124707_183.jpg" alt="">
   </div>
   <div class="im_menus">
-    <div class="icon">会话</div>
-    <div class="icon">联系人</div>
-    <div class="icon">通知</div>
+   <div class="icon">
+     <el-icon>
+       <ChatLineRound/>
+     </el-icon>
+   </div>
+    <div class="icon">
+  <el-icon>
+    <User/>
+  </el-icon>
+    </div>
+    <div class="icon">
+      <el-icon>
+      <Notification/>
+    </el-icon>
+    </div>
   </div>
   <div class="other">其它</div>
 </div>
@@ -57,6 +68,27 @@
       margin-bottom: 20px;
     }
   }
+  .icon {
+    cursor: pointer;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .3s;
+
+    &:hover{
+      background-color: #d9d9d9;
+    }
+
+    &.active{
+      color: #1684fc;
+      background-color: #d9d9d9;
+    }
+  }
+
   .other {
     position: absolute;
     bottom: 20px;
