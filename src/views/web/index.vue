@@ -1,32 +1,44 @@
 <script setup lang="ts">
 
-import {ChatLineRound, Notification, User} from "@element-plus/icons-vue";
+import {ChatLineRound, Menu, Notification, User} from "@element-plus/icons-vue";
+import {useRoute, useRouter} from "vue-router";
+const route = useRoute()
+const router = useRouter()
+function checkMenu(menu: string){
+  router.push({
+    name: menu
+  })
+}
 </script>
 
 <template>
 <div class="im_web">
 <div class="im_slide">
-  <div class="avatar">
+  <div class="avatar" @click="checkMenu('info')">
     <img src="https://meowrain.cn/upload/2024/06/IMG_20240511_124707_183.jpg" alt="">
   </div>
   <div class="im_menus">
-   <div class="icon">
+   <div class="icon" :class="{active: route.name === 'session'}" @click="checkMenu('session')">
      <el-icon>
        <ChatLineRound/>
      </el-icon>
    </div>
-    <div class="icon">
+    <div class="icon" :class="{active: route.name === 'contacts'}" @click="checkMenu('contacts')">
   <el-icon>
     <User/>
   </el-icon>
     </div>
-    <div class="icon">
+    <div class="icon" :class="{active: route.name === 'notice'}" @click="checkMenu('notice')">
       <el-icon>
       <Notification/>
     </el-icon>
     </div>
   </div>
-  <div class="other">其它</div>
+  <div class="other icon">
+    <el-icon>
+      <Menu/>
+    </el-icon>
+  </div>
 </div>
 <RouterView/>
 </div>
@@ -51,6 +63,7 @@ import {ChatLineRound, Notification, User} from "@element-plus/icons-vue";
   align-items: center;
   padding: 20px 0;
   .avatar {
+    cursor: pointer;
     width: 46px;
     height: 46px;
     img {

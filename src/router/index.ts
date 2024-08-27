@@ -10,7 +10,7 @@ const router = createRouter({
       component: () => import("@/views/login/index.vue")
     },
     {
-      path:"",
+      path:"/",
       name:"web",
       component: ()=>import("@/views/web/index.vue"),
       children:[
@@ -25,11 +25,26 @@ const router = createRouter({
               component:()=>import("@/views/web/contacts/user_list.vue")
             },
             {
-              path:"/welcome",
+              path:"welcome",
               name:"welcome",
               component: ()=>import("@/views/web/contacts/welcome.vue"),
             }
           ]
+        },
+        {
+          path:"session",
+          name:"session",
+          component: ()=>import("@/views/web/session/index.vue"),
+        },
+        {
+          path:"info",
+          name:"info",
+          component: ()=>import("@/views/web/info/index.vue")
+        },
+        {
+          path:"notice",
+          name:"notice",
+          component: ()=>import("@/views/web/notice/index.vue")
         }
       ]
     }
