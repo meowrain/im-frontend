@@ -1,11 +1,27 @@
 <script setup lang="ts">
 import {reactive} from "vue";
+import {authLoginApi, type authLoginRequest} from "@/api/auth";
+import {parseToken} from "@/utils/parseToken";
+import type {baseResponse} from "@/api";
+import {ElMessage} from "element-plus";
 
-const form = reactive({
+const form = reactive<authLoginRequest>({
   username: "",
   password: "",
 })
-console.log(import.meta.env)
+
+
+async function login() {
+    let res:baseResponse<authLoginRequest> = await authLoginApi()
+    if (res.code) {
+      ElMessage.error(res.msg)
+      return
+    }
+    console.log("response data:",res.data)
+    const payload = parseToken(res.data)
+    console.log("payload",payload)
+    ElMessage.success(res.msg)
+}
 </script>
 
 <template>
@@ -33,7 +49,9 @@ console.log(import.meta.env)
         <el-checkbox>记住密码</el-checkbox>
       </el-form-item>
       <el-form-item class="item_btn">
-        <el-button style="width: 100%" type="primary">登录</el-button>
+        <el-button style="width: 100%" @click="login" type="primary">登陆</el-button>
+<!--        <el-button style="width: 100%" type="primary">登陆</el-button>-->
+
       </el-form-item>
     </el-form>
     <div class="other_login">

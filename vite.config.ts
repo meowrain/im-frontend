@@ -8,6 +8,7 @@ import type {ImportMetaEnv} from "./env";
 export default defineConfig(({command,mode})=>{
   let env:Record<keyof ImportMetaEnv,string> = loadEnv(mode,process.cwd())
   console.log(env)
+  const serverUrl:string = env.VITE_SERVER_URL
 
     return {
       plugins: [vue(), vueJsx()],
@@ -16,6 +17,16 @@ export default defineConfig(({command,mode})=>{
           '@': fileURLToPath(new URL('./src', import.meta.url))
         }
       },
-      envDir: "./"
+      envDir: "./",
+      server: {
+        host: "0.0.0.0",
+        port: 80,
+        proxy: {
+          "/api": {
+            target: serverUrl,
+            changeOrigin: true,
+          }
+        }
+      }
     }
 })
