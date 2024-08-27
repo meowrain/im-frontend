@@ -5,6 +5,7 @@ const form = reactive({
   username: "",
   password: "",
 })
+console.log(import.meta.env)
 </script>
 
 <template>
