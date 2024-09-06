@@ -1,18 +1,24 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import {reactive} from "vue";
-import {authLoginApi, type authLoginRequest} from "@/api/auth";
-import type {baseResponse} from "@/api";
-import {ElMessage} from "element-plus";
-import {useStore} from "@/stores";
+import { reactive, ref } from "vue";
+import { authLoginApi, type authLoginRequest } from "@/api/auth";
+import { ElMessage, type FormRules } from "element-plus";
+import { useStore } from "@/stores";
 import router from "@/router";
+
 const store = useStore()
 
 const form = reactive<authLoginRequest>({
   username: "",
   password: "",
 })
-async function login() {
 
+const formRef = ref()
+async function login() {
+  let val = await formRef.value.validate()
+  if (!val) {
+    return
+  }
   let res = await authLoginApi(form)
   if (res.code) {
     ElMessage.error(res.msg)
@@ -27,6 +33,14 @@ async function login() {
   })
 }
 
+const rules = reactive<FormRules>({
+  username: [
+    { required: true, message: '请输入用户名', trigger: 'blur' }
+  ],
+  password: [
+    { required: true, message: '请输入密码', trigger: 'blur' }
+  ]
+})
 </script>
 
 <template>
@@ -35,15 +49,15 @@ async function login() {
 
     </div>
     <div class="login_form">
-      <el-form :model="form">
-        <el-form-item>
+      <el-form ref="formRef" :model="form" :rules="rules">
+        <el-form-item prop="username">
           <el-input v-model="form.username" placeholder="用户名">
             <template #prefix>
               <i class="iconfont icon-yonghuming"></i>
             </template>
           </el-input>
         </el-form-item>
-        <el-form-item class="item_password">
+        <el-form-item prop="password" class="item_password">
           <el-input v-model="form.password" placeholder="密码">
             <template #prefix>
               <i class="iconfont icon-mima"></i>
@@ -93,7 +107,9 @@ async function login() {
 .login_form {
   padding: 20px 80px;
 
-  .item_password, .item_action, .item_btn {
+  .item_password,
+  .item_action,
+  .item_btn {
     margin-bottom: 6px;
   }
 
@@ -110,7 +126,8 @@ async function login() {
       width: 100%;
       justify-content: space-between;
 
-      &::before, &::after {
+      &::before,
+      &::after {
         width: 35%;
         height: 1px;
         background-color: #e3e3e3;
