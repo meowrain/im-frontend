@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import {ElMessage} from "element-plus";
+import {useStore} from "@/stores";
 
 
 const router = createRouter({
@@ -46,9 +48,28 @@ const router = createRouter({
           name:"notice",
           component: ()=>import("@/views/web/notice/index.vue")
         }
-      ]
+      ],
+      meta: {requiresAuth: true}
     }
-  ]
-})
+  ],
 
+})
+router.beforeEach((to,from,next)=>{
+  if(to.meta.requiresAuth) {
+    //查看用户是否登录
+    const store = useStore()
+    if(!store.isLogin) {
+      //用户没有登录，跳转到登录页面
+      router.push({
+        name:"login",
+        query:{
+          redirect_url: from.path
+        }
+      })
+      ElMessage.warning("请登录")
+      return
+    }
+  }
+  next()
+})
 export default router
