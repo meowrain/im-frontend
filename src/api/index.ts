@@ -1,5 +1,6 @@
 import axios from "axios";
 import {ElMessage} from "element-plus";
+import {useStore} from "@/stores";
 
 export const useAxios = axios.create({
     baseURL: "", //
@@ -18,8 +19,8 @@ export interface listResponse<T> {
 
 
 useAxios.interceptors.request.use((config) => {
-    // const store = useStore()
-    // config.headers["token"] = store.userInfo.token
+    const store = useStore()
+    config.headers["token"] = store.userInfo.token
     return config
 })
 useAxios.interceptors.response.use((response) => {

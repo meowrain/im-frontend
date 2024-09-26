@@ -2,6 +2,8 @@
 
 import {ChatLineRound, Menu, Notification, User} from "@element-plus/icons-vue";
 import {useRoute, useRouter} from "vue-router";
+import {useStore} from "@/stores";
+const store = useStore()
 const route = useRoute()
 const router = useRouter()
 function checkMenu(menu: string){
@@ -15,7 +17,7 @@ function checkMenu(menu: string){
 <div class="im_web">
 <div class="im_slide">
   <div class="avatar" @click="checkMenu('info')">
-    <img src="https://meowrain.cn/upload/2024/06/IMG_20240511_124707_183.jpg" alt="">
+    <img :src="store.userInfo.avatar" alt="">
   </div>
   <div class="im_menus">
    <div class="icon" :class="{active: route.name === 'session'}" @click="checkMenu('session')">
