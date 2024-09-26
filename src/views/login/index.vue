@@ -5,7 +5,8 @@ import { authLoginApi, type authLoginRequest } from "@/api/auth";
 import { ElMessage, type FormRules } from "element-plus";
 import { useStore } from "@/stores";
 import router from "@/router";
-
+import { useRoute } from "vue-router";
+const route = useRoute()
 const store = useStore()
 
 const form = reactive<authLoginRequest>({
@@ -28,6 +29,14 @@ async function login() {
   ElMessage.success("登陆成功")
   store.setToken(res.data.token)
   // 重定向
+  // 先拿redirect_url 如果有跳转就跳到这里
+  const redirectUrl = route.query.redirect_url
+  if (redirectUrl) {
+    router.push({
+      path: redirectUrl as string,
+    })
+    return
+  }
   await router.push({
     name: "web",
   })
